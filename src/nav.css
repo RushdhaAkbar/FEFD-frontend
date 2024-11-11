@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 64px;
+  }
+  
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .brand {
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center; 
+    gap: 16px;
+  }
+  
+  .nav-links a {
+    font-size: 1rem;
+    color: #333;
+    text-decoration: none;
+  }
+ 
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .cart-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    position: relative;
+  }
+  
+  .cart-count {
+    font-size: 1rem;
+    margin-right: 8px;
+  }
+  
+  .cart-icon {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    gap: 4px;
+  }
+  
+  .nav-right p {
+    font-size: 1rem;
+    color: #333;
+  }
+  

@@ -1,7 +1,7 @@
 import { ShoppingCart } from "lucide-react";
 import "./nav.css";
 function NavigationBar() {
-  const name ="Manupa";
+  const name ="Rushdha";
   const count = 0;
   return (
     <nav class="navbar">

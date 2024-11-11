@@ -4,10 +4,6 @@
     box-sizing: border-box;
   }
   
-  body {
-    font-family: Arial, sans-serif;
-  }
-  
   .navbar {
     display: flex;
     align-items: center;

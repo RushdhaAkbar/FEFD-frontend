@@ -9,7 +9,7 @@ function Button(props){
         type="button"
         onClick={handleClick}
         className="py-2 px-4 text-white font-medium bg-black rounded-md inline-block w-fit">
-            {props.text}
+            {props.children}
         </button>
     );
 }

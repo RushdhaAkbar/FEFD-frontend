@@ -107,34 +107,43 @@ function Products() {
     <section className="px-8 py-8">
       <h2 className="text-4xl font-bold">Our Top Products</h2>
       <Separator className="mt-2" />
-      <div className="mt-4 flex items-center gap-4">
-        {categories.map((category) => (
-          <Tab
-            key={category._id}  
-            _id={category._id}
-            selectedCategoryId={selectedCategoryId}
-            name={category.name}
-            onTabClick={handleTabClick}
-          />
-        ))}
-       
+      
+      
+      <div className="mt-4 flex items-center justify-between">
+        
+        <div className="flex items-center gap-4">
+          {categories.map((category) => (
+            <Tab
+              key={category._id}
+              _id={category._id}
+              selectedCategoryId={selectedCategoryId}
+              name={category.name}
+              onTabClick={handleTabClick}
+            />
+          ))}
+        </div>
+
+        
+        <div className="flex gap-4">
+          <Button
+            className="h-8 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-800"
+            onClick={() => setSortOrder("ascending")}
+          >
+            Sort by Price: Ascending
+          </Button>
+          <Button
+            className="h-8 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-800"
+            onClick={() => setSortOrder("descending")}
+          >
+            Sort by Price: Descending
+          </Button>
+        </div>
       </div>
-      <div className="mt-4 flex gap-4">
-        <Button
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-800"
-          onClick={() => setSortOrder("ascending")}
-        >
-          Sort by Price: Ascending
-        </Button>
-        <Button
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-800"
-          onClick={() => setSortOrder("descending")}
-        >
-          Sort by Price: Descending
-        </Button>
-      </div>
+
+      
       <ProductCards products={sortedProducts} />
     </section>
+
   );
 }
 

@@ -1,4 +1,5 @@
 import { ShoppingCart } from "lucide-react";
+import { Link } from "react-router";
 function NavigationBar(props) {
   
   return (
@@ -17,14 +18,17 @@ function NavigationBar(props) {
           <ShoppingCart />
            Cart</div>
       </a>
-      {props.name ? (
-          <p className="text-base text-black">Hi, {props.name}</p>
-        ) : (
-          <div>
-            <a href="/" className="text-base text-black">Sign In &nbsp; </a> 
-            <a href="/" className="text-base text-black">Sign Up</a>
+      {!props.name && (
+          <div className="flex items-center gap-4">
+            <Link to="/sign-in" className=" text-primary ">
+              Sign In
+            </Link>
+            <Link to="/sign-up" className=" text-primary ">
+              Sign Up
+            </Link>
           </div>
         )}
+        {props.name && <p>Hi, {props.name}</p>}
     </div>
   </nav>
   );

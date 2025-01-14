@@ -1,10 +1,9 @@
 import "./greeting.css"
-function Greeting() {
-  const name = "Manupa";
-
+function Greeting(props) {
+  
   return (
     <div>
-      <h1 className="greeting">Hi, {name}</h1>
+      <h1 className="greeting">Hi, {props.name}</h1>
     </div>
   );
 }

@@ -13,7 +13,7 @@ function NavigationBar(props) {
     </div>
     <div className="flex items-center gap-4">
       <a href="/cart" className="flex items-center no-underline text-black relative ">
-        <span className="text-base mx-2">{props.count}</span>
+      <p className="text-lg">{props.cartCount}</p>
         <div className="flex items-center text-base gap-1">  
           <ShoppingCart />
            Cart</div>

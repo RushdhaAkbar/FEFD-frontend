@@ -3,7 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import Tab from "./Tab";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { getProducts } from "./lib/api";
+import { getProducts,getCategories } from "./lib/api";
 import { Skeleton } from "./components/ui/skeleton";
 
 function Products(props) {
@@ -13,15 +13,22 @@ function Products(props) {
     isError: false,
     message: "",
   });
+  const [categories, setCategories] = useState([]);
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
+  const [categoriesError, setCategoriesError] = useState({
+    isError: false,
+    message: "",
+  });
 
-  const categories = [
-    { _id: "ALL", name: "All" },
-    { _id: "1", name: "Headphones" },
-    { _id: "2", name: "Earbuds" },
-    { _id: "3", name: "Speakers" },
-    { _id: "4", name: "Mobile Phones" },
-    { _id: "5", name: "Smart Watches" },
-  ];
+
+  // const categories = [
+  //   { _id: "ALL", name: "All" },
+  //   { _id: "1", name: "Headphones" },
+  //   { _id: "2", name: "Earbuds" },
+  //   { _id: "3", name: "Speakers" },
+  //   { _id: "4", name: "Mobile Phones" },
+  //   { _id: "5", name: "Smart Watches" },
+  // ];
 
   const [selectedCategoryId, setSelectedCategoryId] = useState("ALL");
   const [sortOrder, setSortOrder] = useState("descending");
@@ -52,7 +59,19 @@ function Products(props) {
       .finally(() => setIsProductsLoading(false));
   }, []);
 
-  if (isProductsLoading) {
+  useEffect(() => {
+    getCategories()
+      .then((categories) => {
+        setCategories(categories);
+      })
+      .catch((error) => {
+        setCategoriesError({ isError: true, message: error.message });
+      })
+      .finally(() => setIsCategoriesLoading(false));
+  }, []);
+
+
+  if (isProductsLoading || isCategoriesLoading) {
     return (
       <section className="px-8 py-8">
         <h2 className="text-4xl font-bold">Our Top Products</h2>
@@ -78,7 +97,7 @@ function Products(props) {
     );
   }
 
-  if (productsError.isError) {
+  if (productsError.isError || categoriesError.isError) {
     return (
       <section className="px-8 py-8">
         <h2 className="text-4xl font-bold">Our Top Products</h2>

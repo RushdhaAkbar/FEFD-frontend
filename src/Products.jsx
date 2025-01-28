@@ -3,90 +3,49 @@ import { Separator } from "@/components/ui/separator";
 import Tab from "./Tab";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { getProducts,getCategories } from "./lib/api";
+import { useGetCategoriesQuery, useGetProductsQuery } from "./lib/api";
 import { Skeleton } from "./components/ui/skeleton";
 
 function Products(props) {
-  const [products, setProducts] = useState([]);
-  const [isProductsLoading, setIsProductsLoading] = useState(true);
-  const [productsError, setProductsError] = useState({
-    isError: false,
-    message: "",
-  });
-  const [categories, setCategories] = useState([]);
-  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
-  const [categoriesError, setCategoriesError] = useState({
-    isError: false,
-    message: "",
-  });
+ 
+  const { data: products, isLoading: isProductsLoading, isError: isProductsError, error: productsError } = useGetProductsQuery();
+  const {
+    data: categories,
+    isLoading: isCategoriesLoading,
+    isError: isCategoriesError,
+    error: categoriesError,
+  } = useGetCategoriesQuery();
 
-
-  // const categories = [
-  //   { _id: "ALL", name: "All" },
-  //   { _id: "1", name: "Headphones" },
-  //   { _id: "2", name: "Earbuds" },
-  //   { _id: "3", name: "Speakers" },
-  //   { _id: "4", name: "Mobile Phones" },
-  //   { _id: "5", name: "Smart Watches" },
-  // ];
+ 
 
   const [selectedCategoryId, setSelectedCategoryId] = useState("ALL");
   const [sortOrder, setSortOrder] = useState("descending");
 
+
+
+
+
   const filteredProducts =
-    selectedCategoryId === "ALL"
-      ? products
-      : products.filter((product) => product.categoryId === selectedCategoryId);
+  selectedCategoryId === "ALL"
+    ? products  || []
+    : products.filter((product) => product.categoryId === selectedCategoryId);
 
-  const handleTabClick = (_id) => {
-    setSelectedCategoryId(_id);
-  };
-
+ 
   const sortedProducts = filteredProducts.slice().sort((a, b) => {
     if (sortOrder === "ascending") return a.price - b.price;
     if (sortOrder === "descending") return b.price - a.price;
     return 0;
   });
 
-  useEffect(() => {
-    getProducts()
-      .then((data) => {
-        setProducts(data);
-      })
-      .catch((error) => {
-        setProductsError({ isError: true, message: error.message });
-      })
-      .finally(() => setIsProductsLoading(false));
-  }, []);
-
-  useEffect(() => {
-    getCategories()
-      .then((categories) => {
-        setCategories(categories);
-      })
-      .catch((error) => {
-        setCategoriesError({ isError: true, message: error.message });
-      })
-      .finally(() => setIsCategoriesLoading(false));
-  }, []);
-
-
+  const handleTabClick = (_id) => {
+    setSelectedCategoryId(_id);
+  };
   if (isProductsLoading || isCategoriesLoading) {
     return (
       <section className="px-8 py-8">
         <h2 className="text-4xl font-bold">Our Top Products</h2>
         <Separator className="mt-2" />
-        <div className="mt-4 flex items-center gap-4">
-          {categories.map((category) => (
-            <Tab
-              key={category._id}
-              _id={category._id}
-              selectedCategoryId={selectedCategoryId}
-              name={category.name}
-              onTabClick={handleTabClick}
-            />
-          ))}
-        </div>
+       
         <div className="grid grid-cols-4 gap-4 mt-4">
           <Skeleton className="h-80" />
           <Skeleton className="h-80" />
@@ -97,34 +56,26 @@ function Products(props) {
     );
   }
 
-  if (productsError.isError || categoriesError.isError) {
+ 
+  if (isProductsError || isCategoriesError) {
     return (
       <section className="px-8 py-8">
         <h2 className="text-4xl font-bold">Our Top Products</h2>
         <Separator className="mt-2" />
-        <div className="mt-4 flex items-center gap-4">
-          {categories.map((category) => (
-            <Tab
-              key={category._id}
-              _id={category._id}
-              selectedCategoryId={selectedCategoryId}
-              name={category.name}
-              onTabClick={handleTabClick}
-            />
-          ))}
-        </div>
-        <p className="mt-4 text-red-500">{productsError.message}</p>
+        
+        <p className="mt-4 text-red-500">{productsError.message || categoriesError.message}</p>
       </section>
     );
   }
 
+  
   return (
     <section className="px-8 py-8">
       <h2 className="text-4xl font-bold">Our Top Products</h2>
       <Separator className="mt-2" />
       <div className="mt-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          {categories.map((category) => (
+        {[...categories, { _id: "ALL", name: "All" }].map((category) => (
             <Tab
               key={category._id}
               _id={category._id}
@@ -149,7 +100,7 @@ function Products(props) {
           </Button>
         </div>
       </div>
-      <ProductCards handleAddToCart={props.handleAddToCart} products={sortedProducts} />
+      <ProductCards products={sortedProducts} />
     </section>
   );
 }

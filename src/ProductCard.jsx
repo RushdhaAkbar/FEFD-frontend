@@ -1,16 +1,30 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+
+import { useSelector,useDispatch } from "react-redux";
+import { addToCart } from "./lib/features/cartSlice";
 
 function ProductCard(props) {
+
+  const count = useSelector((state)=>state.counter.value); // gets selected states
+  const dispatch = useDispatch(); // executes specific tasks
   const handleClick = (e) => {
-    props.handleAddToCart({
+   dispatch( addToCart({
       _id: props._id,
       name: props.name,
       price: props.price,
       image: props.image,
       description: props.description,
-    });
+    })
+  );
+    // props.handleAddToCart({
+    //   _id: props._id,
+    //   name: props.name,
+    //   price: props.price,
+    //   image: props.image,
+    //   description: props.description,
+    // });
+    //dispatch(incrementByAmount(3));
   };
 
   return (

@@ -123,12 +123,16 @@
       getCategories: builder.query({
         query: () => `categories`,
       }),
+      getCategoryProducts: builder.query({
+        query: (categoryId) => categoryId === "ALL" ? `products` : `products?categoryId=${categoryId}`,
+      }),
+      
     }),
   })
   
   // Export hooks for usage in functional components, which are
   // auto-generated based on the defined endpoints
-  export const { useGetProductsQuery,useGetCategoriesQuery } = Api;
+  export const { useGetProductsQuery,useGetCategoriesQuery,useGetCategoryProductsQuery} = Api;
 
 
 

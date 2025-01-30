@@ -1,23 +1,33 @@
 import { ShoppingCart } from "lucide-react";
+import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router";
+
 function NavigationBar(props) {
-  
   return (
     <nav className="flex items-center justify-between py-4 px-16">
-    <div className="flex items-center gap-10">
-      <a className="text-3xl font-semibold text-black no-underline" href="/">Mebius</a>
-      <div className="flex items-center gap-4">
-        <a className="text-base text-black no-underline" href="/">Home</a>
-        <a href="/shop">Shop</a>
+      <div className="flex items-center gap-10">
+        <a className="text-3xl font-semibold text-black no-underline" href="/">Mebius</a>
+        <div className="flex items-center gap-4">
+          <a className="text-base text-black no-underline" href="/">Home</a>
+          <a href="/shop">Shop</a>
+        </div>
       </div>
-    </div>
-    <div className="flex items-center gap-4">
-      <a href="/cart" className="flex items-center no-underline text-black relative ">
-      <p className="text-lg">{props.cartCount}</p>
-        <div className="flex items-center text-base gap-1">  
-          <ShoppingCart />
-           Cart</div>
-      </a>
+      <div className="flex items-center gap-4">
+        <a href="/cart" className="flex items-center no-underline text-black relative">
+          <p className="text-lg">{props.cartCount}</p>
+          <div className="flex items-center text-base gap-1">  
+            <ShoppingCart />
+            Cart
+          </div>
+        </a>
+        <div className="flex items-center gap-1 cursor-pointer">
+          <FaHeart 
+          size={20} 
+          color={props.saveCount > 0 ? "red" : "gray"} />
+          Save
+          <p className="text-lg">{props.saveCount}</p>
+        </div>
+     
       {!props.name && (
           <div className="flex items-center gap-4">
             <Link to="/sign-in" className=" text-primary ">
@@ -30,7 +40,7 @@ function NavigationBar(props) {
         )}
         {props.name && <p>Hi, {props.name}</p>}
     </div>
-  </nav>
+    </nav>
   );
 }
 

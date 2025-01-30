@@ -25,6 +25,7 @@ function HomePage() {
 //   setCart([...cart, { product: product, quantity: 1 }]);
 // };
 const cart = useSelector((state)=>state.cart.value); // gets selected states
+const save = useSelector((state)=>state.save.value);
 
 const getCartQuantity = () => {
   let count = 0;
@@ -33,9 +34,12 @@ const getCartQuantity = () => {
   });
   return count;
 };
+//const savedCount = save.length; this doesnt dynamically update the count
+
+ const getSaveQuantity = () => save.length; // latest update can be rretrived always
   return (
     <div>
-     <NavigationBar name={name} cartCount={getCartQuantity()} />
+     <NavigationBar name={name} cartCount={getCartQuantity()} saveCount={getSaveQuantity()} />
       <Hero />
       <Products/>
      {/*<Products handleAddToCart={handleAddToCart} />*/}

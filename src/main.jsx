@@ -8,10 +8,11 @@ import SignUpPage from "./pages/sign-up.page";
 import CartPage from "./pages/cart.page";
 import { store } from "@/lib/store";
 import { Provider } from "react-redux";
-
+import CheckoutPage from "./pages/checkout.page";
 import { ClerkProvider } from '@clerk/clerk-react'
 import RootLayout from "./layouts/root.layout";
 import AccountPage from "./pages/account.page";
+import PaymentPage from "./pages/payment.page";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
@@ -27,6 +28,8 @@ createRoot(document.getElementById("root")).render(
             <Route path="/" element={<HomePage />} />
             <Route path="/shop/cart" element={<CartPage />} />
             <Route path="/account" element={<AccountPage />} />
+            <Route path="/shop/checkout" element={<CheckoutPage />} />
+            <Route path="/shop/payment" element={<PaymentPage />} />
           </Route>
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />

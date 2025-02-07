@@ -1,8 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Trash2 } from "lucide-react";
+import {  Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { removeFromCart } from "@/lib/features/cartSlice";
+
+import { Link } from "react-router";
 export default function CartPage() {
   const cartItems = useSelector((state) => state.cart.value);
   
@@ -55,6 +57,7 @@ export default function CartPage() {
               ))}
             </CardContent>
           </Card>
+          
           <Card>
             <CardHeader>
               <CardTitle>Order Summary</CardTitle>
@@ -74,8 +77,11 @@ export default function CartPage() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full">Proceed to Checkout</Button>
+              <Link to="/shop/checkout" className="block w-full">
+                <Button className="w-full">Proceed to Checkout</Button>
+              </Link>
             </CardFooter>
+
           </Card>
         </div>
       )}

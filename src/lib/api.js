@@ -88,35 +88,47 @@
 //     }
 //   };
 
-  export const getCategories = async () => {
-    try {
-      const res = await fetch("http://localhost:3000/api/categories", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const categories = 
-      [
-        { _id: "ALL", name: "All" },
-        { _id: "1", name: "Headphones" },
-        { _id: "2", name: "Earbuds" },
-        { _id: "3", name: "Speakers" },
-        { _id: "4", name: "Mobile Phones" },
-        { _id: "5", name: "Smart Watches" },
-      ];
-      return categories;
-    } catch (error) {
-      throw new Error("Error while loading categories");
-    }
-  };
+  // export const getCategories = async () => {
+  //   try {
+  //     const res = await fetch("http://localhost:3000/api/categories", {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     const categories = 
+  //     [
+  //       { _id: "ALL", name: "All" },
+  //       { _id: "1", name: "Headphones" },
+  //       { _id: "2", name: "Earbuds" },
+  //       { _id: "3", name: "Speakers" },
+  //       { _id: "4", name: "Mobile Phones" },
+  //       { _id: "5", name: "Smart Watches" },
+  //     ];
+  //     return categories;
+  //   } catch (error) {
+  //     throw new Error("Error while loading categories");
+  //   }
+  // };
 
   import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
  // Define a service using a base URL and expected endpoints
   export const Api = createApi({
-    reducerPath: 'Api',
-    baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/"}),
-    endpoints: (builder) => ({
+    reducerPath: "Api",
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
+  prepareHeaders: async (headers, { getState }) => {
+    const token = await window.Clerk.session.getToken();
+    console.log(token);
+
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+
+    return headers;
+  },
+
+
+  endpoints: (builder) => ({
       getProducts: builder.query({
         query: () => `products`,
       }),
@@ -126,13 +138,24 @@
       getCategoryProducts: builder.query({
         query: (categoryId) => categoryId === "ALL" ? `products` : `products?categoryId=${categoryId}`,
       }),
-      
+      createOrder: builder.mutation({
+        query: (body) => ({
+          url: `orders`,
+          method: "POST",
+          body,
+        }),
+      }), 
     }),
   })
   
   // Export hooks for usage in functional components, which are
   // auto-generated based on the defined endpoints
-  export const { useGetProductsQuery,useGetCategoriesQuery,useGetCategoryProductsQuery} = Api;
+  export const { 
+    useGetProductsQuery,
+    useGetCategoriesQuery,
+    useGetCategoryProductsQuery,
+    useCreateOrderMutation,
+  } = Api;
 
 
 

@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { useCreateOrderMutation } from "@/lib/api";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 import ShippingAddressForm from "@/components/ShippingAddressForm";
 
 function CheckoutPage() {

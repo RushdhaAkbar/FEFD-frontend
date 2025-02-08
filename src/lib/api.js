@@ -138,6 +138,9 @@
       getCategoryProducts: builder.query({
         query: (categoryId) => categoryId === "ALL" ? `products` : `products?categoryId=${categoryId}`,
       }),
+      getOrder: builder.query({
+        query: (id) => `orders/${id}`,
+      }),
       createOrder: builder.mutation({
         query: (body) => ({
           url: `orders`,
@@ -155,6 +158,7 @@
     useGetCategoriesQuery,
     useGetCategoryProductsQuery,
     useCreateOrderMutation,
+    useGetOrderQuery,
   } = Api;
 
 

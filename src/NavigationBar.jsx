@@ -1,5 +1,5 @@
 import { ShoppingCart } from "lucide-react";
-import { FaHeart } from "react-icons/fa"; // Use only FaHeart
+import { FaHeart } from "react-icons/fa"; 
 import { Link } from "react-router";
 import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { useSelector } from "react-redux";
@@ -21,14 +21,14 @@ function NavigationBar() {
   return (
     <nav className="flex items-center justify-between py-4 px-16">
       <div className="flex items-center gap-10">
-        <a className="text-3xl font-semibold text-black no-underline" href="/">
+        <Link className="text-3xl font-semibold text-black no-underline" to="/">
           Mebius
-        </a>
+        </Link>
         <div className="flex items-center gap-4">
-          <a className="text-base text-black no-underline" href="/">
+          <Link className="text-base text-black no-underline" to="/">
             Home
-          </a>
-          <a href="/shop">Shop</a>
+          </Link>
+          <Link to="/shop">Shop</Link>
         </div>
       </div>
       <div className="flex items-center gap-4">

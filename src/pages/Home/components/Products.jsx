@@ -3,8 +3,8 @@ import { Separator } from "@/components/ui/separator";
 import Tab from "./Tab";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useGetCategoriesQuery, useGetCategoryProductsQuery } from "./lib/api";
-import { Skeleton } from "./components/ui/skeleton";
+import { useGetCategoriesQuery, useGetCategoryProductsQuery } from "../../../lib/api";
+import { Skeleton } from "../../../components/ui/skeleton";
 
 function Products() {
   const [selectedCategoryId, setSelectedCategoryId] = useState("ALL");
@@ -64,7 +64,7 @@ function Products() {
         <h2 className="text-4xl font-bold">Our Top Products</h2>
         <Separator className="mt-2" />
         <p className="mt-4 text-red-500">{productsError?.message || categoriesError?.message}</p>
-      </section>
+      </section>    
     );
   }
 

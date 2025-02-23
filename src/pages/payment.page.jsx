@@ -3,14 +3,41 @@ import { clearCart } from "@/lib/features/cartSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { toast } from "sonner";
-function PaymentPage() {
+import { useUpdateInventoryMutation } from "@/lib/api";
 
+function PaymentPage() {
+ const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.value);
-  const dispatch = useDispatch();
+ 
+  const [updateInventory] = useUpdateInventoryMutation();
+
+  const handlePlaceOrder = async () => {
+    try {
+     
+      dispatch(clearCart());
+      toast.success("Order Placed Successfully");
+  
+      
+      const items = cart.map((item) => ({
+        productId: item.product._id,
+        quantity: item.quantity,
+      }));
+  
+      console.log("Updating Inventory with:", items);
+  
+      // Update inventory with a single API call
+      await updateInventory(items).unwrap();
+  
+      toast.success("Inventory Updated Successfully");
+    } catch (error) {
+      console.error("Inventory Update Error:", error);
+      toast.error("Failed to update inventory. Please try again.");
+    }
+  };
 
   return (
     <main className="px-8">
-    <h2 className="text-4xl font-bold">Review Your Order</h2>
+      <h2 className="text-4xl font-bold">Review Your Order</h2>
     
       <div className="mt-2">
         {cart.map((item, index) => (
@@ -20,28 +47,24 @@ function PaymentPage() {
             <p>{item.quantity}</p>
           </div>
         ))}
+      </div>
       
-    </div>
-    <div className="mt-4">
+      <div className="mt-4">
         <p>
-        Total Price: $
+          Total Price: $
           {cart.reduce(
             (acc, item) => acc + item.product.price * item.quantity,
             0
           )}
         </p>
       </div>
-    <div className="mt-4">
-    <Button
-          onClick={() => {
-            dispatch(clearCart());
-            toast.success("Order Placed Successfully");
-          }}
-        >
+
+      <div className="mt-4">
+        <Button onClick={handlePlaceOrder}>
           Place Order
         </Button>
-     </div>
-  </main>
+      </div>
+    </main>
   );
 }
 

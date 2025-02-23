@@ -115,11 +115,9 @@
  // Define a service using a base URL and expected endpoints
   export const Api = createApi({
     reducerPath: "Api",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" ,
   prepareHeaders: async (headers, { getState }) => {
-    const token = await window.Clerk.session.getToken();
-    console.log(token);
-
+    const token = await window.Clerk?.session?.getToken();
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }
@@ -127,7 +125,7 @@
     return headers;
   },
 
-
+}),
   endpoints: (builder) => ({
       getProducts: builder.query({
         query: () => `products`,
@@ -141,6 +139,9 @@
       getOrder: builder.query({
         query: (id) => `orders/${id}`,
       }),
+      getUserOrders: builder.query({
+        query: (userId) => `orders/user/${userId}`,
+      }),
       createOrder: builder.mutation({
         query: (body) => ({
           url: `orders`,
@@ -148,6 +149,23 @@
           body,
         }),
       }), 
+      createProduct: builder.mutation({
+        query: (body) => ({
+          url: `products`,
+          method: "POST",
+          body,
+        }),
+      }),
+      getInventoryByProductId: builder.query({
+        query: (productId) => `inventories?productId=${productId}`,
+      }),
+      updateInventory: builder.mutation({
+        query: (items) => ({
+          url: `inventories/update`,
+          method: "PATCH",
+          body: { items }, 
+        }),
+      }),
     }),
   })
   
@@ -158,7 +176,11 @@
     useGetCategoriesQuery,
     useGetCategoryProductsQuery,
     useCreateOrderMutation,
+    useCreateProductMutation,
     useGetOrderQuery,
+    useGetUserOrdersQuery,
+    useGetInventoryByProductIdQuery,
+    useUpdateInventoryMutation,
   } = Api;
 
 

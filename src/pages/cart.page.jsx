@@ -13,11 +13,15 @@ export default function CartPage() {
   const removeItem = (id) => {
     dispatch(removeFromCart(id));
   };
-
   const total = cartItems.reduce(
-    (sum, item) => sum + Number.parseFloat(item.product.price) * item.quantity,
+    (sum, item) => sum + item.product.price * item.quantity,
     0
   );
+  
+  // const total = cartItems.reduce(
+  //   (sum, item) => sum + Number.parseFloat(item.product.price) * item.quantity,
+  //   0
+  // );
 // number.parseFloat converts the price from string to number
 //.reduce() is a callback function that gets and stores one product item from the array
 //It multiplies each item's price by its quantity and sums them up.

@@ -17,7 +17,7 @@ function NavigationBar() {
   };
 
   const getSaveQuantity = () => save.length;
-
+  const userId = "user_2sf56LmszyA84qWVOZKCBB68OQX"; 
   return (
     <nav className="flex items-center justify-between py-4 px-16">
       <div className="flex items-center gap-10">
@@ -29,6 +29,7 @@ function NavigationBar() {
             Home
           </Link>
           <Link to="/shop">Shop</Link>
+         
         </div>
       </div>
       <div className="flex items-center gap-4">
@@ -63,6 +64,7 @@ function NavigationBar() {
 
         <SignedIn>
           <UserButton />
+          <Link to={"/account"}>Account</Link>
         </SignedIn>
       </div>
     </nav>

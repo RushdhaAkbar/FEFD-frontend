@@ -115,7 +115,7 @@
  // Define a service using a base URL and expected endpoints
   export const Api = createApi({
     reducerPath: "Api",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" ,
+  baseQuery: fetchBaseQuery({ baseUrl: "https://fed-storefront-backend-rushdha.onrender.com/api/" ,
   prepareHeaders: async (headers, { getState }) => {
     const token = await window.Clerk?.session?.getToken();
     if (token) {

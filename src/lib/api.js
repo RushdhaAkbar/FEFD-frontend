@@ -108,14 +108,14 @@
   //     return categories;
   //   } catch (error) {
   //     throw new Error("Error while loading categories");
-  //   }
+  //   }https://fed-storefront-backend-rushdha.onrender.com/api/
   // };
 
   import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
  // Define a service using a base URL and expected endpoints
   export const Api = createApi({
     reducerPath: "Api",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://fed-storefront-backend-rushdha.onrender.com/api/" ,
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/" ,
   prepareHeaders: async (headers, { getState }) => {
     const token = await window.Clerk?.session?.getToken();
     if (token) {

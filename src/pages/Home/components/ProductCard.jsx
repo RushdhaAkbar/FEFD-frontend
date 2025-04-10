@@ -5,7 +5,7 @@ import { FaHeart } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../../../lib/features/cartSlice";
 import { addToSave, removeFromSave } from "../../../lib/features/saveSlice";
-
+import { toast } from "sonner";
 function ProductCard(props) {
   const dispatch = useDispatch();
   const savedItems = useSelector((state) => state.save.value);
@@ -26,6 +26,7 @@ function ProductCard(props) {
   const handleSave = () => {
     if (isSaved) {
       dispatch(removeFromSave(props._id));
+      toast.success("Item removed from whishlist");
     } else {
       dispatch(addToSave({
         _id: props._id,
@@ -34,7 +35,9 @@ function ProductCard(props) {
         image: props.image,
         description: props.description,
       }));
+      toast.success("Item saved to whishlist");
     }
+    
   };
 
   return (

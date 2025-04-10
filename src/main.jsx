@@ -22,6 +22,7 @@ import OrderPage from "./pages/order.page";
 import AdminProductCreatePage from "./pages/admin-product-create.page";
 import MainLayout from "./layouts/main.layout";
 import RootLayout from "./layouts/rootLayout/root.layout";
+import SavedItemsPage from "./pages/savedItems.page";
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 if (!PUBLISHABLE_KEY) {
@@ -44,6 +45,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="/shop/payment" element={<PaymentPage />} />
             <Route path="/shop/complete" element={<CompletePage />} />
             <Route path="/shop/:productId" element={<ProductPage />} />
+            <Route path="/saved" element={<SavedItemsPage />} />
              {/* The AdminProtected layout can be used to wrap routes that needs to be logged in as admin to access */}
              <Route element={<AdminProtected />}>
                   <Route

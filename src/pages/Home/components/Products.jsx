@@ -10,28 +10,25 @@ function Products() {
   const [selectedCategoryId, setSelectedCategoryId] = useState("ALL");
   const [sortOrder, setSortOrder] = useState("descending");
 
-
-  const { 
-    data: products = [], 
-    isLoading: isProductsLoading, 
-    isError: isProductsError, 
+  const {
+    data: products = [],
+    isLoading: isProductsLoading,
+    isError: isProductsError,
     error: productsError,
   } = useGetCategoryProductsQuery(selectedCategoryId);
 
-  const { 
-    data: categories = [], 
-    isLoading: isCategoriesLoading, 
-    isError: isCategoriesError, 
+  const {
+    data: categories = [],
+    isLoading: isCategoriesLoading,
+    isError: isCategoriesError,
     error: categoriesError,
   } = useGetCategoriesQuery();
 
-  
   // useEffect(() => {
   //   console.log("Selected Category:", selectedCategoryId);
   //   console.log("Products from API:", products);
   // }, [selectedCategoryId, products]);
 
- 
   const sortedProducts = [...products].sort((a, b) => {
     if (sortOrder === "ascending") return a.price - b.price;
     if (sortOrder === "descending") return b.price - a.price;
@@ -40,7 +37,6 @@ function Products() {
 
   const handleTabClick = (_id) => {
     setSelectedCategoryId(_id);
-    
   };
 
   if (isProductsLoading || isCategoriesLoading) {
@@ -64,7 +60,7 @@ function Products() {
         <h2 className="text-4xl font-bold">Our Top Products</h2>
         <Separator className="mt-2" />
         <p className="mt-4 text-red-500">{productsError?.message || categoriesError?.message}</p>
-      </section>    
+      </section>
     );
   }
 
@@ -86,13 +82,21 @@ function Products() {
         </div>
         <div className="flex gap-4">
           <Button
-            className="h-8 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-800"
+            className={`h-8 px-4 py-2 text-white rounded-md transition-colors ${
+              sortOrder === "ascending"
+                ? "bg-blue-800"
+                : "bg-blue-500 hover:bg-blue-800"
+            }`}
             onClick={() => setSortOrder("ascending")}
           >
             Sort by Price: Ascending
           </Button>
           <Button
-            className="h-8 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-800"
+            className={`h-8 px-4 py-2 text-white rounded-md transition-colors ${
+              sortOrder === "descending"
+                ? "bg-blue-800"
+                : "bg-blue-500 hover:bg-blue-800"
+            }`}
             onClick={() => setSortOrder("descending")}
           >
             Sort by Price: Descending

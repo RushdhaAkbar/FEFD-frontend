@@ -5,22 +5,15 @@ import { useUser } from "@clerk/clerk-react";
 export default function OrderPage() {
   const { user, isLoaded } = useUser();
   const userId = user?.id;
+
+
+  const { data, isLoading, error } = useGetUserOrdersQuery(userId, { skip: !userId });
+
   if (!isLoaded) return <div className="text-center">Loading...</div>;
   if (!user) return <div className="text-center">Please log in</div>;
-
-  const { data, isLoading, error } = useGetUserOrdersQuery(userId); 
-
-  if (isLoading) {
-    return <div className="text-center">Loading...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center">Failed to load orders</div>;
-  }
-
-  if (!data || data.length === 0) {
-    return <p className="text-center text-gray-500">You have no orders yet</p>;
-  }
+  if (isLoading) return <div className="text-center">Loading...</div>;
+  if (error) return <div className="text-center">Failed to load orders</div>;
+  if (!data || data.length === 0) return <p className="text-center text-gray-500">You have no orders yet</p>;
 
   return (
     <div className="container mx-auto px-4 py-8">

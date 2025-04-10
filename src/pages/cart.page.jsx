@@ -29,7 +29,7 @@ export default function CartPage() {
 //sum is total sum stored and item is the currently clicked cart item 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">My Cart</h1>
+      <h1 className="text-3xl font-bold mb-8 text-center">Cart</h1>
       {cartItems.length === 0 ? (
         <p className="text-center text-gray-500">Your cart is empty</p>
       ) : (

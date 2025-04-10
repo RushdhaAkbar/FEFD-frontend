@@ -8,7 +8,7 @@ import { Skeleton } from "../../../components/ui/skeleton";
 
 function Products() {
   const [selectedCategoryId, setSelectedCategoryId] = useState("ALL");
-  const [sortOrder, setSortOrder] = useState("descending");
+  const [sortOrder, setSortOrder] = useState("ascending");
 
   const {
     data: products = [],

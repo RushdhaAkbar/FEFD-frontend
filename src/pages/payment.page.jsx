@@ -1,36 +1,25 @@
-import { Button } from "@/components/ui/button";
-import { clearCart } from "@/lib/features/cartSlice";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { toast } from "sonner";
+import CartItem from "@/components/CartItem";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate } from "react-router";
+import CheckoutForm from "./CheckoutForm";
+import { useSearchParams } from "react-router";
 
 function PaymentPage() {
-  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.value);
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const orderId = searchParams.get("orderId");
 
-  const handlePlaceOrder = async () => {
-    try {
-      // Note: The order creation API (via createOrder) now handles inventory updates
-      // You should already be calling this in ShippingAddressForm.jsx via useCreateOrderMutation
-      // Here, we just clear the cart and show a success message
-      dispatch(clearCart());
-      toast.success("Order Placed Successfully");
-    } catch (error) {
-      console.error("Error placing order:", error);
-      toast.error("Failed to place order. Please try again.");
-    }
-  };
+  if (cart.length === 0) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <main className="px-8">
       <h2 className="text-4xl font-bold">Review Your Order</h2>
-      <div className="mt-2">
+      <div className="mt-4 grid grid-cols-4 gap-x-4">
         {cart.map((item, index) => (
-          <div key={index}>
-            <p>{item.product.name}</p>
-            <p>{item.product.price}</p>
-            <p>{item.quantity}</p>
-          </div>
+          <CartItem key={index} item={item} />
         ))}
       </div>
       <div className="mt-4">
@@ -42,8 +31,9 @@ function PaymentPage() {
           )}
         </p>
       </div>
+
       <div className="mt-4">
-        <Button onClick={handlePlaceOrder}>Place Order</Button>
+        <CheckoutForm orderId={orderId} />
       </div>
     </main>
   );

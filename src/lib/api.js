@@ -1,19 +1,27 @@
 
   import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
  // Define a service using a base URL and expected endpoints
+   const BASE_URL = import.meta.env.VITE_BASE_URL;
   export const Api = createApi({
     reducerPath: "Api",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8000/api/" ,
-  prepareHeaders: async (headers, { getState }) => {
-    const token = await window.Clerk?.session?.getToken();
-    if (token) {
-      headers.set("Authorization", `Bearer ${token}`);
-    }
-
-    return headers;
-  },
-
-}),
+    baseQuery: fetchBaseQuery({
+      baseUrl: `${BASE_URL}/api/`,
+      prepareHeaders: async (headers, { getState }) => {
+        return new Promise((resolve) => {
+          async function checkToken() {
+            const clerk = window.Clerk;
+            if (clerk) {
+              const token = await clerk.session?.getToken();
+              headers.set("Authorization", `Bearer ${token}`);
+              resolve(headers);
+            } else {
+              setTimeout(checkToken, 500); // try again in 500ms
+            }
+          }
+          checkToken();
+        });
+      },
+    }),
   endpoints: (builder) => ({
       getProducts: builder.query({
         query: () => `products`,
@@ -47,7 +55,16 @@
       getInventoryByProductId: builder.query({
         query: (productId) => `inventories?productId=${productId}`,
       }),
-      
+      createCheckoutSession: builder.mutation({
+        query: () => ({
+          url: `payments/create-checkout-session`,
+          method: "POST",
+        }),
+      }),
+      getCheckoutSessionStatus: builder.query({
+        query: (sessionId) => `payments/session-status?session_id=${sessionId}`,
+      }),
+   
     }),
   })
   
@@ -62,7 +79,8 @@
     useGetOrderQuery,
     useGetUserOrdersQuery,
     useGetInventoryByProductIdQuery,
-    useUpdateInventoryMutation,
+    useCreateCheckoutSessionMutation,
+    useGetCheckoutSessionStatusQuery,
   } = Api;
 
 

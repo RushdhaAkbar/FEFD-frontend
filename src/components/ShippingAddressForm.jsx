@@ -2,6 +2,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 import {
   Form,
   FormControl,
@@ -44,19 +45,25 @@ const ShippingAddressForm = ({ cart }) => {
   });
 
   // Handle Form Submission
-  function handleSubmit(values) {
-    createOrder({
-      items: cart,
-      shippingAddress: {
-        line_1: values.line_1,
-        line_2: values.line_2,
-        city: values.city,
-        state: values.state,
-        zip_code: values.zip_code,
-        phone: values.phone,
-      },
-    });
-    navigate("/shop/payment");
+  async function handleSubmit(values) {
+    try {
+      const data = await createOrder({
+        items: cart,
+        shippingAddress: {
+          line_1: values.line_1,
+          line_2: values.line_2,
+          city: values.city,
+          state: values.state,
+          zip_code: values.zip_code,
+          phone: values.phone,
+        },
+      }).unwrap();
+      console.log(data);      
+      toast.success("Checkout successful");
+      navigate(`/shop/payment?orderId=${data.orderId}`);
+    } catch (error) {
+      toast.error("Checkout failed");
+    }
   }
   return (
     <div className="p-4 border rounded-lg shadow-md">
@@ -164,6 +171,6 @@ const ShippingAddressForm = ({ cart }) => {
       </Form>
     </div>
   );
-};
+}
 
 export default ShippingAddressForm;

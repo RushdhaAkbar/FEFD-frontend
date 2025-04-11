@@ -32,7 +32,7 @@ function AccountPage() {
       <div className="mt-4">
         {isAdmin ? ( 
           <Button asChild>
-            <Link to="/admin/products/create">Create Order</Link>
+            <Link to="/admin/products/create">Create Products</Link>
           </Button>
         ) : (
           <Button asChild>

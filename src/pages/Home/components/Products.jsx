@@ -82,20 +82,18 @@ function Products() {
         </div>
         <div className="flex gap-4">
           <Button
-            className={`h-8 px-4 py-2 text-white rounded-md transition-colors ${
-              sortOrder === "ascending"
-                ? "bg-blue-800"
-                : "bg-blue-500 hover:bg-blue-800"
+            variant="outline"
+            className={`h-8 px-4 py-2 rounded-md border border-[#edeef1] text-black ${
+              sortOrder === "ascending" ? "bg-gray-100" : "bg-white hover:bg-white"
             }`}
             onClick={() => setSortOrder("ascending")}
           >
             Sort by Price: Ascending
           </Button>
           <Button
-            className={`h-8 px-4 py-2 text-white rounded-md transition-colors ${
-              sortOrder === "descending"
-                ? "bg-blue-800"
-                : "bg-blue-500 hover:bg-blue-800"
+            variant="outline"
+            className={`h-8 px-4 py-2 rounded-md border border-[#edeef1] text-black ${
+              sortOrder === "descending" ? "bg-gray-100" : "bg-white hover:bg-white"
             }`}
             onClick={() => setSortOrder("descending")}
           >

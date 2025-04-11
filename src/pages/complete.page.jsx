@@ -77,7 +77,7 @@ function CompletePage() {
 
         <Button
           asChild
-          className="mt-8 w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
+          className="mt-8 w-full sm:w-auto bg-black text-white font-semibold py-2 px-6 rounded-lg transition-colors"
         >
           <Link to="/">Return to Home</Link>
         </Button>
